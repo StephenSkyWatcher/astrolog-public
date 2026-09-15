@@ -1,0 +1,428 @@
+/* ============================================================
+   astrolog — public gallery.
+   Layout is its own (gallery grid, feed, Messier wall), but every
+   colour, font and component idiom is lifted from site.css so the
+   public pages and the working app read as one thing. Keep these
+   tokens in sync with site.css if that palette ever changes.
+   ============================================================ */
+:root{
+  /* A shade under site.css's #eceef2 -- the white cards need to sit ON the page,
+     not blend into it. Everything else keeps the app's values. */
+  --bg:#e3e7ed; --surface:#ffffff; --surface2:#f4f6f9;
+  --border:#d8dee6; --border2:#e7ebf0;
+  --ink:#1a2430; --ink2:#41505f; --dim:#6b7787; --faint:#9aa5b2;
+  --accent:#3c6fa6; --good:#5a8a52;
+  --shadow:0 1px 2px rgba(20,30,45,.05);
+  --maxw:1240px; --gutter:14px;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+html,body{max-width:100%;overflow-x:hidden;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Geist',system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;}
+.dim{color:var(--dim);}
+
+/* section label — the app's recurring 10px uppercase mono rule */
+.lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);
+  border-bottom:1px solid var(--border2);padding-bottom:5px;margin:20px 0 10px;}
+.dbody > .lbl:first-of-type{margin-top:16px;}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;align-items:center;gap:18px;padding:13px var(--gutter);
+  border-bottom:1px solid var(--border);background:var(--surface);}
+.logo{font-weight:700;font-size:15px;display:flex;align-items:center;gap:9px;color:var(--ink);}
+.logo .mk{width:23px;height:23px;border-radius:50%;flex-shrink:0;
+  background:radial-gradient(circle at 35% 30%,#6ea8ff,#1f6feb 60%,#0b1b3a);}
+.nav{margin-left:auto;display:flex;gap:3px;}
+.nav a{padding:6px 12px;border-radius:5px;color:var(--dim);font-size:13px;font-weight:500;white-space:nowrap;}
+.nav a:hover{color:var(--ink);}
+.nav a.on{color:var(--ink);background:var(--surface2);}
+
+main{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter) 50px;}
+.foot{max-width:var(--maxw);margin:0 auto;padding:20px var(--gutter) 34px;
+  border-top:1px solid var(--border);display:flex;flex-direction:column;gap:4px;
+  font-size:12px;color:var(--dim);font-family:'Geist Mono',monospace;}
+
+/* ---------- intro ---------- */
+.hero-copy{padding:30px 0 20px;max-width:680px;}
+.hero-copy h1{margin:0 0 10px;font-size:26px;line-height:1.22;letter-spacing:-.015em;font-weight:600;}
+/* Intro prose is body copy, not a caption -- it reads at full ink, while the
+   grey stays for metadata (dates, gear, counts). */
+.hero-copy p{margin:0 0 16px;color:var(--ink);font-size:14px;}
+.search{width:100%;max-width:420px;background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:8px 13px;color:var(--ink);font-size:13px;outline:none;
+  font-family:'Geist Mono',monospace;}
+.search:focus{border-color:#1f6feb;}
+.search::placeholder{color:var(--dim);}
+.empty{color:var(--faint);padding:30px 0;text-align:center;font-size:13px;}
+
+/* ---------- gallery grid ---------- */
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s;}
+.card:hover{border-color:#b9c6d6;box-shadow:0 2px 8px rgba(20,30,45,.09);}
+.card .shot{aspect-ratio:3/2;background:var(--surface2);overflow:hidden;}
+.card .shot img{width:100%;height:100%;object-fit:cover;}
+.card .meta{padding:9px 11px 11px;}
+.card .nm{display:block;font-weight:600;font-size:15px;color:var(--ink);line-height:1.25;}
+.card .sub{display:block;font-family:'Geist Mono',monospace;font-size:11px;
+  color:var(--faint);margin-top:3px;}
+.card .sub .green{color:var(--good);}
+
+/* ---------- feed ---------- */
+/* Feed reads as a single column of posts, so it gets a measure of its own
+   rather than the full page width -- roughly what the app's feed column comes
+   out to once its 300px rail is subtracted. */
+.feed-page{max-width:720px;margin:0 auto;}
+/* The gallery keeps more width than the feed -- it is a grid, and squeezing it
+   costs a whole column -- but not the full 1240 the Messier wall wants. */
+.gallery-page{max-width:1040px;margin:0 auto;}
+.feed{display:flex;flex-direction:column;gap:16px;}
+.post{background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  overflow:hidden;box-shadow:var(--shadow);}
+.post .ph{display:flex;align-items:center;gap:11px;padding:11px 14px;}
+.post .ava{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;
+  align-items:center;justify-content:center;background:var(--surface2);
+  border:1px solid var(--border2);font-family:'Geist Mono',monospace;
+  font-size:11px;font-weight:600;color:var(--dim);}
+.post .pt{font-weight:600;font-size:15px;color:var(--ink);}
+.post .pt .vis{font-family:'Geist Mono',monospace;font-size:11px;color:var(--faint);
+  font-weight:400;margin-left:5px;}
+.post .ps{font-family:'Geist Mono',monospace;font-size:11px;color:var(--faint);margin-top:1px;}
+.post .pimg{width:100%;background:var(--surface2);}
+.post .pstats{display:flex;flex-wrap:wrap;gap:4px 16px;padding:10px 14px;
+  border-top:1px solid var(--border2);font-family:'Geist Mono',monospace;
+  font-size:11px;color:var(--faint);}
+.post .pstats b{color:var(--ink);font-weight:500;}
+.post .pstats .green{color:var(--good);}
+
+/* ---------- equipment thumbs (mirrors .tm-gear in site.css) ---------- */
+.gear{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+.gear figure{margin:0;width:84px;text-align:center;}
+.gear img{width:84px;height:64px;object-fit:cover;border:1px solid var(--border2);
+  border-radius:3px;background:var(--surface2);display:block;}
+.gear figcaption{font-size:9px;color:var(--faint);font-family:'Geist Mono',monospace;
+  margin-top:3px;line-height:1.25;word-break:break-word;}
+.equip-tag{display:inline-block;background:var(--surface);border:1px solid var(--border);
+  border-radius:3px;padding:1px 6px;font-size:10px;color:var(--dim);margin:2px 2px 0 0;
+  font-family:'Geist Mono',monospace;}
+
+/* ---------- Messier wall ---------- */
+.count{margin:0;font-family:'Geist Mono',monospace;font-size:12px;color:var(--dim);}
+.count b{color:var(--ink);font-size:15px;}
+/* The wall gets a night-sky panel of its own. On the page grey the unshot
+   slots (near-white on near-white) were invisible and the photographed ones
+   read as dark tiles scattered at random; against dark, both resolve and the
+   thumbnails carry their own contrast. Neutral greys, no blue cast -- the
+   photographs supply all the colour this page needs. */
+.mwall{background:#17181a;border:1px solid #0c0d0e;border-radius:4px;padding:12px;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35);}
+.mgrid{display:grid;gap:5px;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));}
+.mcell{position:relative;aspect-ratio:1;border-radius:3px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);}
+.mcell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.mcell .mid{position:relative;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;}
+.mcell.done .mid{position:absolute;bottom:0;left:0;margin:0 0 4px 4px;
+  background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.18);
+  padding:1px 5px;border-radius:3px;color:#e8ecf3;}
+.mcell.done:hover{border-color:rgba(255,255,255,.6);}
+.mcell.todo{border-style:dashed;border-color:rgba(255,255,255,.14);}
+.mcell.todo .mid{color:rgba(255,255,255,.34);font-weight:500;}
+
+/* ---------- target detail ---------- */
+.detail{max-width:900px;margin:0 auto;padding-top:18px;}
+.detail .full img{width:100%;border:1px solid var(--border);border-radius:4px;
+  background:var(--surface2);box-shadow:var(--shadow);}
+/* Everything under the hero sits on one white panel, so the facts, gear and
+   session list read as a single card rather than floating on the page grey. */
+.dbody{background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  box-shadow:var(--shadow);padding:16px;margin-top:10px;}
+.dhead{padding:0;}
+.dhead h1{margin:0 0 3px;font-size:20px;font-weight:600;color:var(--ink);}
+.dhead .sub{margin:0;font-family:'Geist Mono',monospace;font-size:11px;color:var(--faint);}
+.facts{display:flex;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);
+  padding:12px 0;margin:14px 0;flex-wrap:wrap;gap:10px 0;}
+.facts div{padding:0 20px;border-right:1px solid var(--border2);}
+.facts div:first-child{padding-left:0;}
+.facts div:last-child{border-right:none;}
+.facts dt{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);}
+.facts dd{margin:2px 0 0;font-size:18px;font-family:'Geist Mono',monospace;color:var(--ink);}
+.facts dd.green{color:var(--good);}
+.alsoin{margin:10px 0;font-family:'Geist Mono',monospace;font-size:11px;color:var(--dim);}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:3px;margin-top:8px;}
+.gal img{width:100%;height:110px;object-fit:cover;opacity:.85;transition:opacity .15s;
+  border-radius:2px;background:var(--surface2);}
+.gal a:hover img{opacity:1;}
+
+.session{background:var(--surface2);border:1px solid var(--border2);border-radius:3px;
+  padding:10px 12px;margin-bottom:6px;}
+.session .row1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+.session .date{font-family:'Geist Mono',monospace;font-size:12px;color:var(--ink);}
+.session .int{font-family:'Geist Mono',monospace;font-size:12px;color:var(--good);}
+.session .fr{font-size:11px;color:var(--dim);}
+
+/* Grid, not space-between. With flex the middle item is positioned by the
+   widths of its siblings, so "All targets" drifts off-centre whenever the two
+   sides differ -- and lands well left on the first and last target, where one
+   side is an empty span. 1fr auto 1fr pins the middle to the true centre and
+   lets the links sit hard left and right. */
+.pager{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;
+  margin-top:30px;padding-top:16px;border-top:1px solid var(--border2);
+  font-family:'Geist Mono',monospace;font-size:12px;}
+.pager > :first-child{justify-self:start;}
+.pager > :last-child{justify-self:end;}
+.pager a{color:var(--dim);padding:5px 2px;}
+.pager a:hover{color:var(--accent);}
+
+@media(max-width:560px){
+  .hero-copy h1{font-size:22px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(148px,1fr));}
+  .facts div{padding:0 14px;}
+  .nav a{padding:6px 9px;}
+}
+
+/* ---------- plate-solve overlay (ported from .tm-* in site.css) ----------
+   Marker positions are fractions of the frame, so they survive the resize
+   the exporter does. The box must shrink-wrap the image: an inset:0 overlay
+   on a letterboxed object-fit image is offset from the actual pixels. */
+.herobox{position:relative;display:block;line-height:0;background:var(--surface2);
+  border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:var(--shadow);}
+.herobox img{width:100%;display:block;}
+.ovl{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .18s ease;}
+.herobox.show-objects .ovl{opacity:1;}
+.mark{position:absolute;transform:translate(-50%,-50%);}
+.mark i{display:block;width:26px;height:26px;margin:-13px 0 0 -13px;position:absolute;
+  border:1px solid #6ea8ff;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.5);}
+.mark span{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);
+  color:#6ea8ff;font:400 11px/1 'Geist Mono',monospace;letter-spacing:.02em;
+  white-space:nowrap;text-shadow:0 0 3px #000,0 0 3px #000;}
+/* Tinted rather than opaque, so the frame shows through, but in the same blue
+   as the markers it toggles -- a grey button on a dark nebula was easy to miss. */
+.ovl-btn{position:absolute;right:10px;bottom:10px;z-index:2;width:32px;height:32px;
+  padding:0;border-radius:50%;cursor:pointer;
+  background:rgba(31,111,235,.28);border:1px solid rgba(110,168,255,.8);
+  color:#8fc0ff;box-shadow:0 1px 4px rgba(0,0,0,.45);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  display:flex;align-items:center;justify-content:center;transition:all .15s ease;}
+.ovl-btn svg{width:19px;height:19px;display:block;}
+.ovl-btn:hover{background:rgba(31,111,235,.55);border-color:#9ec8ff;color:#fff;}
+.ovl-btn.on{background:#1f6feb;border-color:#9ec8ff;color:#fff;}
+
+/* Target write-up, from `notes` in details.toml. Prose, so it gets a real
+   measure and a quiet rule to set it apart from the facts table below. */
+.notes{margin:0 0 20px;padding:15px 17px;border-left:2px solid var(--accent);
+  background:var(--surface2);border-radius:0 6px 6px 0;}
+.notes p{margin:0 0 10px;font-size:14px;line-height:1.65;color:var(--ink2);max-width:68ch;}
+.notes p:first-child{color:var(--ink);font-weight:500;}
+.notes p:last-child{margin-bottom:0;}
+
+
+/* ---- emoji reactions ----
+   Shared by target pages and feed cards. Bars stay hidden until counts arrive,
+   so a dead endpoint leaves no visible trace. */
+.rx { display:flex; gap:6px; margin:18px 0 2px; flex-wrap:wrap; align-items:center; }
+.rx.busy { opacity:.6; pointer-events:none; }
+.rx .rx-b {
+  display:inline-flex; align-items:center; gap:5px;
+  font:inherit; font-size:14px; line-height:1;
+  padding:5px 9px; border-radius:999px; cursor:pointer;
+  background:var(--card,#fff); color:inherit;
+  border:1px solid var(--line,#d8dee6);
+  transition:transform .08s ease, border-color .15s ease, background .15s ease;
+}
+.rx .rx-b:hover { transform:translateY(-1px); border-color:var(--ink,#111); }
+.rx .rx-b:active { transform:translateY(0); }
+.rx .rx-b b { font-weight:600; font-size:11px; font-variant-numeric:tabular-nums; opacity:.75; }
+/* Your pick. The server decides this, not the browser. */
+.rx .rx-b.mine { border-color:#3d7dd6; background:#eaf1fb; }
+.rx .rx-b.mine b { opacity:1; color:#3d7dd6; }
+/* Icon button. Grey and borderless at rest so it reads as an affordance
+   rather than a control, warming on hover the way a like button does. */
+.rx-add {
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:6px; border-radius:999px; cursor:pointer;
+  background:none; border:1px solid transparent;
+  color:var(--faint,#9aa4b2);
+  transition:color .15s ease, background .15s ease, transform .1s ease;
+}
+.rx-add svg { display:block; }
+.rx-add:hover {
+  color:#e8a33d; background:var(--surface2,#eef1f5);
+  border-color:transparent; transform:none;
+}
+.rx-add[aria-expanded="true"] { color:#e8a33d; background:var(--surface2,#eef1f5); }
+.rx-add:focus-visible { outline:2px solid #3d7dd6; outline-offset:2px; }
+
+/* Picker popover. Appended to <body> and absolutely positioned, so a card with
+   overflow:hidden cannot clip it. */
+.rx-pop {
+  position:absolute; z-index:60; width:288px; max-height:320px; overflow-y:auto;
+  /* Keep the wheel inside the picker instead of scrolling the page once it
+     hits the end, and let touch drag it on mobile. */
+  overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+  padding:10px; border-radius:12px;
+  background:var(--card,#fff); border:1px solid var(--line,#d8dee6);
+  box-shadow:0 12px 32px rgba(0,0,0,.18);
+}
+.rx-pop .rx-grp + .rx-grp { margin-top:10px; }
+.rx-pop h4 {
+  margin:0 0 5px; font-size:10px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; opacity:.5;
+}
+.rx-pop .rx-grp > div { display:flex; flex-wrap:wrap; gap:2px; }
+.rx-pop .rx-e {
+  font-size:19px; line-height:1; padding:4px; width:34px; height:34px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:none; border:0; border-radius:7px; cursor:pointer;
+}
+.rx-pop .rx-e:hover { background:var(--bg,#eef1f5); transform:scale(1.15); }
+
+@media (prefers-color-scheme: dark) {
+  .rx .rx-b.mine { background:#16283f; border-color:#4b8ae0; }
+  .rx .rx-b.mine b { color:#7fb0f0; }
+  .rx-pop { box-shadow:0 12px 32px rgba(0,0,0,.5); }
+}
+
+/* The + sits top-right in a feed card header, pushed there by margin-left:auto
+   as the last flex child. `hidden` must still win, hence :not([hidden]) --
+   otherwise `display:flex` would override the attribute and show an empty
+   button before the counts have loaded. */
+.post .ph > .rx-plus:not([hidden]) {
+  margin-left:auto; flex-shrink:0; display:flex; align-items:center;
+}
+.rx-plus.busy { opacity:.6; pointer-events:none; }
+.post .ph .rx-add { padding:5px; }
+
+/* Pill row on a feed card lines up with the stats above it. */
+.post > .rx { padding:0 14px 12px; margin:0; }
+.post > .rx:not([hidden]) + .pstats { border-top:0; }
+
+/* View count: deliberately quiet, a footnote under the reactions. */
+.rx-views {
+  margin:10px 0 0; font-family:'Geist Mono',monospace;
+  font-size:11px; color:var(--faint,#9aa4b2); letter-spacing:.02em;
+}
+
+/* ---- + button overlaid on the detail-page hero ----
+   Matches .ovl-btn's treatment so the two corners look like one set. The blur
+   and dark scrim keep it legible over a bright nebula or an empty starfield. */
+.herobox > .rx-plus.on-hero:not([hidden]) {
+  position:absolute; right:10px; top:10px; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+}
+.herobox .rx-plus .rx-add {
+  width:34px; height:34px; padding:0; border-radius:50%;
+  background:rgba(12,16,24,.46); border:1px solid rgba(255,255,255,.34);
+  color:#e9eef6; box-shadow:0 1px 4px rgba(0,0,0,.45);
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.herobox .rx-plus .rx-add:hover,
+.herobox .rx-plus .rx-add[aria-expanded="true"] {
+  background:rgba(232,163,61,.85); border-color:rgba(255,255,255,.6); color:#fff;
+}
+
+/* Detail page: chips ride between the hero and the write-up. */
+.rx.under-hero { margin:12px 0 0; }
+/* The view count is a footnote at the very bottom, centred. */
+.rx-views { text-align:center; }
+
+/* ---- sign-in modal ----
+   Only ever shown after someone presses an emoji and Google One Tap declined to
+   appear. Nobody browsing the gallery sees this. */
+.rx-auth {
+  position:fixed; inset:0; z-index:200; display:flex;
+  align-items:center; justify-content:center; padding:20px;
+  background:rgba(8,11,16,.55); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+}
+.rx-auth-box {
+  width:100%; max-width:340px; padding:22px 22px 18px; border-radius:14px;
+  background:var(--card,#fff); border:1px solid var(--line,#d8dee6);
+  box-shadow:0 18px 48px rgba(0,0,0,.3); text-align:center;
+}
+.rx-auth-box h3 { margin:0 0 6px; font-size:16px; }
+.rx-auth-box p { margin:0 0 16px; font-size:13px; line-height:1.5; color:var(--dim,#5b6675); }
+.rx-auth-btn { display:flex; justify-content:center; min-height:44px; }
+.rx-auth-x {
+  margin-top:12px; background:none; border:0; cursor:pointer;
+  font:inherit; font-size:12px; color:var(--faint,#9aa4b2);
+}
+.rx-auth-x:hover { color:var(--ink,#111); }
+
+/* Footer privacy note: present but quiet, spanning the footer's full width.
+   The rest of the footer is single-line metadata; this is a sentence, so it
+   gets line-height to match. */
+.foot .priv { max-width:none; width:100%; font-size:10px; line-height:1.55; margin-top:6px; }
+
+/* ---- comments ---- */
+.cm-box { max-width:var(--maxw); margin:34px auto 0; padding:22px var(--gutter) 0;
+  border-top:1px solid var(--border); }
+.cm-box h2 { font-size:15px; margin:0 0 14px; }
+.cm-box .cm-count { color:var(--faint,#9aa4b2); font-weight:400; font-size:13px; }
+.cm-empty { color:var(--faint,#9aa4b2); font-size:13px; margin:0 0 16px; }
+
+.cm { display:flex; flex-direction:column; gap:4px; padding:12px 0;
+  border-bottom:1px solid var(--border2); }
+.cm-head { display:flex; align-items:center; gap:10px; }
+/* Initials, not a name. Round chip so it reads as a person without being one. */
+.cm-who { display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  background:var(--surface2,#eef1f5); border:1px solid var(--border2);
+  font-family:'Geist Mono',monospace; font-size:10px; font-weight:600;
+  color:var(--dim,#5b6675); letter-spacing:.02em; }
+.cm-when { font-family:'Geist Mono',monospace; font-size:11px; color:var(--faint,#9aa4b2); }
+.cm-del { margin-left:auto; background:none; border:0; cursor:pointer; padding:4px;
+  border-radius:6px; display:inline-flex; align-items:center;
+  color:var(--faint,#9aa4b2); transition:color .15s ease, background .15s ease; }
+.cm-del svg { display:block; }
+.cm-del:hover { color:#c2453d; background:rgba(194,69,61,.1); }
+.cm-del:focus-visible { outline:2px solid #c2453d; outline-offset:1px; }
+/* Someone else's comment, deletable only because you are the admin. Tinted so
+   you can tell at a glance it is not your own. */
+.cm-del.as-admin { color:#c2874b; }
+.cm-del.as-admin:hover { color:#c2453d; }
+/* pre-wrap so line breaks survive; wrapping so one long word cannot widen the page */
+.cm-text { margin:0; font-size:14px; line-height:1.6; white-space:pre-wrap;
+  overflow-wrap:anywhere; }
+
+.cm-form { margin-top:16px; }
+.cm-input { width:100%; box-sizing:border-box; padding:10px 12px; resize:vertical;
+  font:inherit; font-size:14px; line-height:1.5; border-radius:8px;
+  background:var(--card,#fff); color:inherit; border:1px solid var(--line,#d8dee6); }
+.cm-input:focus { outline:2px solid #3d7dd6; outline-offset:-1px; border-color:transparent; }
+.cm-actions { display:flex; align-items:center; gap:12px; margin-top:8px; }
+.cm-hint { font-size:11px; color:var(--faint,#9aa4b2); line-height:1.4; }
+.cm-send { margin-left:auto; flex-shrink:0; padding:7px 18px; border-radius:999px;
+  cursor:pointer; font:inherit; font-size:13px; font-weight:500;
+  background:var(--ink,#1a1f27); color:var(--card,#fff); border:1px solid transparent; }
+.cm-send:hover { opacity:.88; }
+.cm-send:disabled { opacity:.5; cursor:default; }
+
+/* ---- comments on feed cards ----
+   Denser than the target-page thread: one line per comment, initials chip,
+   text, time. The input starts as a stub because 144 live textareas is a lot
+   of DOM for something most cards never use. */
+.fc-box { padding:0 14px 12px; display:flex; flex-direction:column; gap:6px; }
+.fc-list { display:flex; flex-direction:column; gap:6px; }
+.fc-c { display:flex; align-items:baseline; gap:8px; font-size:13px; line-height:1.5; }
+.fc-c .cm-who { width:22px; height:22px; font-size:9px; align-self:flex-start; }
+.fc-t { flex:1; min-width:0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.fc-c .cm-when { flex-shrink:0; align-self:flex-start; }
+.fc-c .cm-del { margin-left:0; flex-shrink:0; align-self:flex-start; padding:2px; }
+
+.fc-more { align-self:flex-start; background:none; border:0; cursor:pointer;
+  padding:2px 0; font:inherit; font-family:'Geist Mono',monospace; font-size:11px;
+  color:var(--dim,#5b6675); }
+.fc-more:hover { color:var(--accent,#3d7dd6); text-decoration:underline; }
+
+/* Looks like an input, costs one button. */
+.fc-stub { text-align:left; width:100%; padding:7px 11px; border-radius:8px;
+  cursor:text; font:inherit; font-size:13px; color:var(--faint,#9aa4b2);
+  background:var(--bg,#f5f7fa); border:1px solid var(--border2); }
+.fc-stub:hover { border-color:var(--line,#d8dee6); }
+.fc-form .cm-input { font-size:13px; }
+.fc-form .cm-actions { margin-top:6px; }
+.fc-form .cm-send { padding:5px 14px; font-size:12px; }
